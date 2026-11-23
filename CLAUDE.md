@@ -139,7 +139,7 @@ stub. Vessel and equipment objects, which are what Brewhouse will actually read,
 |---|---|
 | `/auth/verify` (forward_auth) | not built. The controller has PIN login with a session cookie (`brewcontrol_session`, `/api/controller/v1/auth/*`); forward_auth comes with Caddy |
 | `GET /equipment/profile` | not built. Heater equipment exists as `GET /api/controller/v1/heaters` (ids `bk_heater_1`, `bk_heater_2`, `hlt_heater`, `rims_heater`; config includes `watts`, `boil_f`, `max_temp_f`, sensors); the profile will build on it |
-| `POST /plans`, `/validate`, `/arm` | not built. Heater modes exist for people at the controller (`duty`, `pid` hold temp, `boil` with hold %); a plan step will map onto these. Heating is attended-only, so Brewhouse must never start a heater |
+| `POST /plans`, `/validate`, `/arm` | not built. The engine they'll feed exists: programs made of steps (routines + person confirmations), one session at a time, `GET /api/controller/v1/programs` (each with a JSON-schema of its params) and `GET /session`. A Brewhouse plan will compile to a program's params. People start sessions at the controller; heating is attended-only, so Brewhouse must never start one |
 | `GET /events`, WebSocket | WebSocket `/api/controller/v1/ws` streams live point/device changes (Phase 1); brew-session events and `GET /events?after=` not built |
 | `GET /readings` | built as `GET /api/controller/v1/history?series=a,b&from=&to=&max_points=` (Phase 1) |
 | `POST /fermenters/{id}/profile` | not built |
@@ -162,4 +162,5 @@ Copied from DESIGN.md; ask when the project starts:
 - 2026-11-22: brewcontrol Phase 1 running; read-only API live (see the availability table). Firmware framing found: messages end with `;`.
 - 2026-11-22: cellar hardware changed. Glycol is now a self-controlled tank with one pump per fermenter and one for the chill plate (not wired yet); old glycol valves and the CIP pump are retired; mash tun volume sensor removed.
 - 2026-11-22: brewcontrol Phase 2 step 1 live: PIN login, controllable outputs (RO valve and booster), interlocks, audit log at `/api/controller/v1/events`.
+- 2026-11-23: brewcontrol Phase 3 engine built (sessions, programs "heat_hold" and "boil"); brew-day routines come after the owner's walkthrough. The plan contract will be shaped by the engine's step/params model.
 - 2026-11-22: brewcontrol heater layer built (simulator-tested; live test pending). Stable heater ids `bk_heater_1`, `bk_heater_2`, `hlt_heater`, `rims_heater`; modes duty / pid / boil; `GET /api/controller/v1/heaters`. Each heater's output and target are logged to history as series `<heater_id>.output` and `<heater_id>.target`. Heating is attended-only until a hardware watchdog relay is fitted.
