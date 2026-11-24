@@ -168,3 +168,4 @@ Copied from DESIGN.md; ask when the project starts:
 - 2026-11-23: brewcontrol sessions gained checklists (built, not yet deployed): step kind `stage`, `session.checklist`, `session.measurements` (entered values such as gravities), `POST /session/checklist/{item}`; `/session/confirm` takes `step` and `attended`.
 - 2026-11-23: vessel sizes from the manufacturer's drawings (175 L each, not 40 gal); recipe math must not assume 46 gal is usable. HLT level reading tops out at 41.0 gal until recalibrated.
 - 2026-11-23: brewcontrol config adds point `boil_kettle_volume_low` (second BK level sensor at a bottom outlet; uncalibrated, not deployed yet, don't use it).
+- 2026-11-23: deployed to the brewcontrol container: checklists/stages API, `boil_kettle_volume_low` (still uncalibrated), BK heat minimum 10 gal.
