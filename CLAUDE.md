@@ -66,7 +66,7 @@ Push over SSH with the `github-redgoggles` host alias: `git@github-redgoggles:re
 ## The owner and their brewery (context for recipe math and UI)
 
 - Experienced homebrewer. Uses Brewfather most recently, BeerSmith before, and switches between them.
-- **Three-vessel, all-electric:**
+- **Three-vessel, all-electric**, 175 L (46 gal) each; dimensions in `brewcontrol/docs/vessels.md`:
   - **HLT:** heating element, coil.
   - **Mash tun:** RIMS heater, coil.
   - **Boil kettle:** two elements, steam condenser.
@@ -166,3 +166,4 @@ Copied from DESIGN.md; ask when the project starts:
 - 2026-11-22: brewcontrol heater layer built (simulator-tested; live test pending). Stable heater ids `bk_heater_1`, `bk_heater_2`, `hlt_heater`, `rims_heater`; modes duty / pid / boil; `GET /api/controller/v1/heaters`. Each heater's output and target are logged to history as series `<heater_id>.output` and `<heater_id>.target`. Heating is attended-only until a hardware watchdog relay is fitted.
 - 2026-11-23: brewcontrol made the mash tun, HLT, BK and cooling water pumps, `steam_conversion_valve` and `cooling_water_valve` controllable. Draft BrewPlan fields (what Brewhouse must supply) are in brewcontrol `docs/brew-day.md` section 5; not a contract yet.
 - 2026-11-23: brewcontrol sessions gained checklists (built, not yet deployed): step kind `stage`, `session.checklist`, `session.measurements` (entered values such as gravities), `POST /session/checklist/{item}`; `/session/confirm` takes `step` and `attended`.
+- 2026-11-23: vessel sizes from the manufacturer's drawings (175 L each, not 40 gal); recipe math must not assume 46 gal is usable. HLT level reading tops out at 41.0 gal until recalibrated.
